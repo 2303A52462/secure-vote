@@ -86,12 +86,6 @@ This project solves these fundamental flaws by implementing:
      python manage.py runserver 127.0.0.1:8000
      ```
 
-6. **Access the Application**:
-   - **Voter Portal**: [http://127.0.0.1:8000](http://127.0.0.1:8000)
-   - **Live Results**: [http://127.0.0.1:8000/show-result/](http://127.0.0.1:8000/show-result/)
-   - **Proof-of-Work Miner**: [http://127.0.0.1:8000/mine-block/](http://127.0.0.1:8000/mine-block/)
-   - **Blockchain Explorer**: [http://127.0.0.1:8000/blockchain/](http://127.0.0.1:8000/blockchain/)
-   - **Django Administration**: [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
 
 ---
 
