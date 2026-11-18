@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+<script src="{% static 'scripts/base.js' %}"></script>
+<script src="{% static 'scripts/csrf.js' %}"></script>
+<script src="{% static 'scripts/home.js' %}"></script>
+{% endblock %}
+
+{% block main_content %}
+
+<div class="home-dashboard-grid">
+
+    <!-- ---------------- Left Column: System Architecture & Trust Showcase ---------------- -->
+    <div class="portal-hero-card">
+        <div class="portal-badge">
+            <span class="badge-icon">🛡️</span>
+            <span>National E-Voting Protocol • NIST P-256</span>
+        </div>
+
+        <h1 class="portal-title">
+            Decentralized Voting Sealed by <span class="gradient-text">Blockchain & Cryptography</span>
+        </h1>
+
+        <p class="portal-description">
+            Cast your ballot with mathematical certainty. Every vote is signed with an asymmetric NIST P-256 elliptic curve private key, hashed with SHA3-256, and permanently sealed into Proof-of-Work blockchain blocks.
+        </p>
+
+        <!-- Feature Grid -->
+        <div class="portal-features-grid">
+            <div class="feature-item">
+                <div class="feature-icon-box">🔐</div>
+                <div class="feature-text-group">
+                    <h4>ECDSA Signatures</h4>
+                    <p>FIPS 186-3 compliant digital signatures guarantee ballot authenticity.</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon-box">🌳</div>
+                <div class="feature-text-group">
+                    <h4>Merkle Tree Audit</h4>
+                    <p>SHA3-256 Merkle root recalculation detects any database tampering.</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon-box">⛏️</div>
+                <div class="feature-text-group">
+                    <h4>Proof-of-Work (PoW)</h4>
+                    <p>Cryptographic puzzle mining seals transactions into immutable blocks.</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon-box">🔄</div>
+                <div class="feature-text-group">
+                    <h4>Self-Healing Ledger</h4>
+                    <p>Automated consensus ledger restoration repairs corrupted nodes.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="portal-trust-row">
+            <span>Cryptographic Standards:</span>
+            <span class="trust-tag">ECDSA P-256</span>
+            <span class="trust-tag">SHA3-256</span>
+            <span class="trust-tag">PoW Puzzle Target: 000</span>
+            <span class="trust-tag">Anti-Duplicate Check</span>
+        </div>
+    </div>
+
+    <!-- ---------------- Right Column: Citizen Authentication Card ---------------- -->
+    <div class="authentication">
+        {% csrf_token %}
+
+        <div class="auth-card-header">
+            <div class="auth-step-pill">
+                <span>Step 1 of 3</span>
+                <span>• Identity Verification</span>
+            </div>
+            <h2 class="auth-card-title">Voter Authentication</h2>
+            <p class="auth-card-subtitle">
+                Enter your 12-digit UIDAI Aadhaar Number to verify your eligibility on the electoral roll.
+            </p>
+        </div>
+
+        <div class="input-section">
+            <div class="input-field-wrapper">
+                <span class="input-field-icon">🪪</span>
+                <input type="text" placeholder="7497 7023 2287" class="input-text" id="aadhar" autocomplete="off" autofocus value="749770232287" maxlength="14" aria-label="12 Digit Aadhaar Card Number">
+            </div>
+
+            <div class="input-helper-text">
+                <span>🔒 End-to-end encrypted identity verification against electoral database.</span>
+            </div>
+
+            <button type="button" class="submit" id="auth-submit-btn" onclick="submit_aadhar()">
+                <span>Authenticate Identity</span>
+                <span>→</span>
+            </button>
+        </div>
+
+        <!-- Inline Alert / Feedback for Instant Visibility -->
+        <div id="auth-inline-msg" role="alert"></div>
+    </div>
+
+</div>
+
+<!-- ---------------- Bottom Row: Electoral Roll & Demo Voters Panel ---------------- -->
+<div class="demo-voter-panel">
+    <div class="demo-panel-header">
+        <div class="demo-panel-title-group">
+            <span class="demo-panel-title">
+                <span>👥</span>
+                <span>Official Electoral Roll (Registered Team Members)</span>
+            </span>
+            <span class="demo-panel-subtitle">
+                Click any citizen below to instantly authenticate and test the complete voting pipeline.
+            </span>
+        </div>
+        <a href="/create-dummy-data" class="demo-reset-link" title="Reset and re-seed the electoral database">
+            <span>⚙️</span>
+            <span>Reset Demo Database</span>
+        </a>
+    </div>
+
+    <div class="demo-chip-group">
+        <div class="demo-group-label">
+            <span style="color: #10b981;">●</span> Select Citizen to Authenticate & Cast Ballot:
+        </div>
+        <div class="demo-chips" id="ready-voters">
+            <div class="demo-chip ready" onclick="selectDemoVoter('749770232287')" role="button" tabindex="0">
+                <div class="demo-chip-top-row">
+                    <span class="demo-chip-name">Mohammad Arkan</span>
+                    <span class="demo-chip-badge">READY TO VOTE</span>
+                </div>
+                <span class="demo-chip-uid">7497 7023 2287</span>
+                <div class="demo-chip-contact">
+                    <span>📱 +91 99597 93306</span>
+                    <span>✉️ 2303a52470@sru.edu.in</span>
+                </div>
+            </div>
+
+            <div class="demo-chip ready" onclick="selectDemoVoter('716046971150')" role="button" tabindex="0">
+                <div class="demo-chip-top-row">
+                    <span class="demo-chip-name">Billa Mahanand</span>
+                    <span class="demo-chip-badge">READY TO VOTE</span>
+                </div>
+                <span class="demo-chip-uid">7160 4697 1150</span>
+                <div class="demo-chip-contact">
+                    <span>📱 +91 93815 25274</span>
+                    <span>✉️ 2303A52462@sru.edu.in</span>
+                </div>
+            </div>
+
+            <div class="demo-chip ready" onclick="selectDemoVoter('842692422932')" role="button" tabindex="0">
+                <div class="demo-chip-top-row">
+                    <span class="demo-chip-name">Rajesh</span>
+                    <span class="demo-chip-badge">READY TO VOTE</span>
+                </div>
+                <span class="demo-chip-uid">8426 9242 2932</span>
+                <div class="demo-chip-contact">
+                    <span>📱 +91 94413 32781</span>
+                    <span>✉️ 2303a52301@sru.edu.in</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-chip-group" id="voted-group" style="margin-top: 16px; display: none;">
+        <div class="demo-group-label">
+            <span style="color: #ef4444;">●</span> Citizens Who Have Already Voted (Duplicate Rejection Enforced):
+        </div>
+        <div class="demo-chips" id="voted-voters"></div>
+    </div>
+
+    <div class="demo-hint">
+        <span>🔒</span>
+        <span><strong>Two-Factor Authentication:</strong> Supports primary Mobile SMS OTP delivery with Institutional Email OTP as an additional option. Demo mode automatically pre-fills passcodes for live viva/presentations.</span>
+    </div>
+</div>
+
+{% endblock %}

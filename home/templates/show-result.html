@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/show-result.css' %}">
+
+    <script src="{% static 'scripts/base.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            hide_loading();
+            showAlert('Live Election Tally: Aggregated directly from verified cryptographic ballot records.', 'rgba(238, 242, 255, 0.95)', '#4338ca');
+        });
+    </script>
+{% endblock %}
+
+{% block main_content %}
+
+<div class="show-result">
+
+    <!-- ---------------- 4 Metric Summary Cards ---------------- -->
+    <div class="results-metric-grid">
+        <div class="result-stat-card card-total">
+            <div class="stat-card-number">{{ total_votes }}</div>
+            <div class="stat-card-label">Total Valid Ballots Cast</div>
+        </div>
+
+        <div class="result-stat-card card-sealed">
+            <div class="stat-card-number">{{ sealed_votes }}</div>
+            <div class="stat-card-label">Sealed in Blockchain</div>
+        </div>
+
+        <div class="result-stat-card card-mempool">
+            <div class="stat-card-number">{{ unsealed_votes }}</div>
+            <div class="stat-card-label">Pending in Mempool</div>
+        </div>
+
+        <div class="result-stat-card card-blocks">
+            <div class="stat-card-number">{{ total_blocks }}</div>
+            <div class="stat-card-label">Blockchain Blocks Mined</div>
+        </div>
+    </div>
+
+    <!-- ---------------- Frontrunner Spotlight Card ---------------- -->
+    {% if winner and total_votes > 0 %}
+    <div class="winner-spotlight-card">
+        <div class="winner-info-group">
+            <div class="winner-trophy-icon">🏆</div>
+            <div class="winner-titles">
+                <h4>Official Frontrunner</h4>
+                <h2>{{ winner }}</h2>
+            </div>
+        </div>
+        <div>
+            <a href="/blockchain" class="winner-verify-btn">
+                <span>Verify on Ledger</span>
+                <span>→</span>
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- ---------------- Detailed Standings Table Card ---------------- -->
+    <div class="standings-table-card">
+        <div class="standings-card-header">
+            <h3>Constituency Standings & Vote Distribution</h3>
+            <span>Real-time aggregation from decentralized ledger</span>
+        </div>
+
+        <table class="vote-count">
+            <tr class="table-header">
+                <td style="width: 70px; text-align: center;">Rank</td>
+                <td style="width: 80px; text-align: center;">Symbol</td>
+                <td>Political Party & Nominee</td>
+                <td style="width: 140px; text-align: center;">Votes Cast</td>
+                <td style="width: 240px;">Vote Share (%)</td>
+            </tr>
+
+            {% for result in results %}
+            <tr>
+                <td style="text-align: center;">
+                    <div class="rank-badge" style="margin: 0 auto;">
+                        {% if result.sr == 1 %}🥇{% elif result.sr == 2 %}🥈{% elif result.sr == 3 %}🥉{% else %}<span style="font-size: 14px; font-weight: 700; color: var(--slate-600);">#{{ result.sr }}</span>{% endif %}
+                    </div>
+                </td>
+                <td style="text-align: center;">
+                    <img class="party-symbol-img" src="{{ result.party_symbol }}" onerror="this.src='{% static 'images/logo.png' %}'" alt="{{ result.party_name }}">
+                </td>
+                <td>
+                    <div class="party-info-cell">
+                        <div class="party-name-row">{{ result.party_name }}</div>
+                        {% if result.candidate_name %}
+                        <div class="candidate-name-row">
+                            <span>Candidate:</span>
+                            <strong>{{ result.candidate_name }}</strong>
+                        </div>
+                        {% endif %}
+                    </div>
+                </td>
+                <td style="text-align: center;">
+                    <span class="vote-number-cell">{{ result.vote_count }}</span>
+                </td>
+                <td>
+                    <div class="share-bar-cell">
+                        <div class="share-track">
+                            <div class="share-fill" style="width: {{ result.percentage }}%;"></div>
+                        </div>
+                        <span class="share-percent-label">{{ result.percentage }}%</span>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 48px; color: var(--slate-400);">
+                    <div style="font-size: 24px; margin-bottom: 8px;">🗳️</div>
+                    <div style="font-size: 15px; font-weight: 600; color: var(--slate-700);">No votes recorded yet in this election.</div>
+                    <div style="font-size: 13px; color: var(--slate-500); margin-top: 4px;">Go to <a href="/" style="color: var(--indigo-600); font-weight: 700;">Cast Ballot</a> to register the first vote!</div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- ---------------- Action Navigation ---------------- -->
+    <div class="results-actions-row">
+        <a href="/" class="receipt-action-btn btn-revote">
+            <span>🗳️</span>
+            <span>Cast Another Vote</span>
+        </a>
+        <a href="/mine-block" class="receipt-action-btn btn-mine">
+            <span>⛏️</span>
+            <span>Mine Mempool Transactions</span>
+        </a>
+        <a href="/blockchain" class="receipt-action-btn btn-ledger">
+            <span>⛓️</span>
+            <span>Inspect Blockchain Ledger</span>
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

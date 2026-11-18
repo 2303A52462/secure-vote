@@ -1,0 +1,486 @@
+/* ==========================================================================
+   SecureVote - Voter Credential & 2FA Authentication Station (candidate-profile.css)
+   ========================================================================== */
+
+.candidate-details-div {
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    animation: slide-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ---------------- National Voter Credential Card ---------------- */
+.candidate-details {
+    background: #ffffff;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    position: relative;
+}
+
+.credential-top-ribbon {
+    background: linear-gradient(135deg, var(--slate-900), #1e1b4b);
+    color: #ffffff;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.credential-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.credential-emblem-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.credential-header-titles h3 {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    color: #ffffff;
+}
+
+.credential-header-titles p {
+    font-size: 11px;
+    color: var(--cyan-500);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.credential-verified-badge {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #34d399;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Voter Profile Layout */
+.voter-card-body {
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 28px;
+    align-items: start;
+}
+
+.voter-photo-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.candidate-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12), 0 0 0 2px var(--slate-200);
+    background: var(--slate-100);
+}
+
+.voter-uid-chip {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--slate-700);
+    background: var(--slate-100);
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--slate-200);
+    text-align: center;
+}
+
+/* Voter Data Table / Grid */
+.details {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.details-row {
+    border-bottom: 1px solid var(--slate-100);
+}
+
+.details-row:last-child {
+    border-bottom: none;
+}
+
+.details td {
+    padding: 10px 12px;
+    font-size: 13.5px;
+}
+
+.des {
+    color: var(--slate-500);
+    font-weight: 600;
+    font-size: 12.5px;
+    width: 160px;
+}
+
+/* ---------------- Two-Factor Authentication Section ---------------- */
+.verification-box {
+    background: #ffffff;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-xl);
+    padding: 26px 28px;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.verification-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--slate-100);
+}
+
+.verification-title-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--slate-900);
+}
+
+.auth-tabs-bar {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+.auth-tab-btn {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--slate-200);
+    background: var(--slate-50);
+    color: var(--slate-600);
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.auth-tab-btn:hover {
+    border-color: var(--slate-300);
+    background: var(--slate-100);
+}
+
+.auth-tab-btn.active {
+    border-color: var(--emerald-500);
+    background: var(--emerald-50);
+    color: var(--emerald-700);
+}
+
+.auth-tab-btn-email.active {
+    border-color: var(--indigo-600);
+    background: var(--indigo-50);
+    color: var(--indigo-700);
+}
+
+.auth-tab-pill-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: var(--radius-full);
+    letter-spacing: 0.5px;
+}
+
+.auth-tab-btn.active .auth-tab-pill-tag {
+    background: var(--emerald-500);
+    color: #ffffff;
+}
+
+.auth-tab-btn-email.active .auth-tab-pill-tag {
+    background: var(--indigo-600);
+    color: #ffffff;
+}
+
+/* Auth Panels */
+.auth-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.auth-input-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.auth-input-field {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    color: var(--slate-900);
+    background: var(--slate-50);
+}
+
+.verified-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.button,
+.auth-send-btn {
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    background: var(--emerald-600);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+    transition: all 0.2s ease;
+}
+
+.auth-send-btn:hover {
+    background: var(--emerald-700);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
+}
+
+.auth-send-btn-email {
+    background: var(--indigo-600);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.auth-send-btn-email:hover {
+    background: var(--indigo-700);
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+}
+
+.auth-hint-msg {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--slate-600);
+    background: var(--slate-50);
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--slate-200);
+}
+
+/* Proceed to Vote CTA */
+.action-section {
+    text-align: center;
+    margin-top: 8px;
+}
+
+.vote-now {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 48px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    user-select: none;
+}
+
+.vote-now.disabled {
+    background: var(--slate-200) !important;
+    color: var(--slate-400) !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    pointer-events: none;
+}
+
+.vote-now:not(.disabled) {
+    background: linear-gradient(135deg, var(--emerald-600), #047857) !important;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+    cursor: pointer;
+}
+
+.vote-now:not(.disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.45);
+}
+
+/* ==========================================================================
+   OTP Verification Popup Dialog Modal
+   ========================================================================== */
+div.otp-verification {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+div.otp-div {
+    display: none;
+    background: #ffffff;
+    border-radius: var(--radius-xl);
+    padding: 32px 36px;
+    max-width: 440px;
+    width: 100%;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+    text-align: center;
+    box-sizing: border-box;
+    margin: auto;
+}
+
+.otp-modal-header {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--slate-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+#otp-destination-display {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--slate-900);
+    margin-bottom: 18px;
+    font-family: var(--font-mono);
+}
+
+#otp-input {
+    width: 220px;
+    text-align: center;
+    letter-spacing: 10px;
+    font-size: 26px;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    padding: 12px 14px;
+    border: 2px solid var(--indigo-600);
+    border-radius: var(--radius-lg);
+    color: var(--slate-900);
+    background: var(--indigo-50);
+    margin: 8px auto 16px;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    transition: all 0.2s ease;
+}
+
+#otp-input:focus {
+    background: #ffffff;
+    border-color: var(--indigo-700);
+}
+
+.otp-btn-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 14px;
+}
+
+#verify {
+    padding: 12px 28px;
+    background: var(--emerald-600);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    transition: all 0.2s ease;
+}
+
+#verify:hover {
+    background: var(--emerald-700);
+    transform: translateY(-1px);
+}
+
+#cancel-otp {
+    padding: 12px 20px;
+    background: var(--slate-100);
+    color: var(--slate-700);
+    font-weight: 600;
+    font-size: 14px;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#cancel-otp:hover {
+    background: var(--slate-200);
+}
+
+#otp-demo-hint {
+    font-size: 12px;
+    color: var(--indigo-600);
+    margin-top: 14px;
+    font-weight: 500;
+    background: var(--indigo-50);
+    padding: 8px 12px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--indigo-100);
+}
+
+@media (max-width: 640px) {
+    .voter-card-body {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+    }
+    .auth-tabs-bar {
+        flex-direction: column;
+    }
+    .auth-input-row {
+        flex-direction: column;
+    }
+    .auth-send-btn {
+        width: 100%;
+    }
+}

@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mine-block.css' %}">
+    
+    <script src="{% static 'scripts/base.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            hide_loading();
+            showAlert('Proof-of-Work (PoW) Mining Console: Seal mempool votes into cryptographically linked blocks.', 'rgba(238, 242, 255, 0.95)', '#4338ca');
+        });
+    </script>
+{% endblock %}
+
+{% block main_content %}
+
+<div class="mine-block-page-wrapper">
+
+    <!-- ---------------- Main Mining Dashboard Card ---------------- -->
+    <div class="mine-block">
+        
+        <div class="miner-header-emblem">⛏️</div>
+
+        <h2 class="miner-title">Proof-of-Work Consensus Engine</h2>
+        <p class="miner-subtitle">
+            Calculates SHA3-256 Merkle Roots from pending ballots, searches for a valid Nonce satisfying cryptographic difficulty target (<code class="puzzle-spec-pill">Target: {{ puzzle }}</code>), and seals transactions into immutable blocks.
+        </p>
+
+        <!-- Mempool Queue Indicator -->
+        <div class="mempool-stat-card">
+            <div class="mempool-count-number" id="pending-vote-count">{{ data }}</div>
+            <div class="mempool-label">Vote Transactions Waiting in Mempool</div>
+            <div class="puzzle-spec-pill">Hashing Algorithm: SHA3-256 (FIPS 186-3)</div>
+        </div>
+
+        {% if data > 0 %}
+        <div class="start-mining-button" role="button" tabindex="0">
+            <span>⛏️</span>
+            <span>Start Mining Blocks Now</span>
+        </div>
+        {% else %}
+        <div class="all-sealed-banner">
+            <span>✓</span>
+            <span>All vote transactions are currently sealed and cryptographically linked in the blockchain!</span>
+        </div>
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            <a href="/" class="receipt-action-btn btn-revote">
+                <span>🗳️</span>
+                <span>Cast a New Vote</span>
+            </a>
+            <a href="/blockchain" class="receipt-action-btn btn-ledger">
+                <span>⛓️</span>
+                <span>View Blockchain Ledger</span>
+            </a>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <!-- ---------------- Mined Blocks Results Container ---------------- -->
+    <div class="mine-block-status">
+    </div>
+
+</div>
+
+<script>
+    $('.start-mining-button').click(function(){
+        showAlert('Mining initialized... Solving Proof-of-Work cryptographic puzzle.', 'rgba(238, 242, 255, 0.95)', '#4338ca');
+        $('.mine-block').hide();
+
+        var html = `
+            <div class="curr-status">Initializing PoW Mining...</div>
+            <div class="complete-status">
+                <div class="completed">0% completed</div>
+            </div>
+        `;
+        show_loading('Solving SHA3-256 Proof-of-Work...<br>' + html);
+
+        $.ajax({
+            type: "GET",
+            url: "/start-mining/",
+            success: function(data){
+                showAlert('Mining complete! Newly sealed blocks are displayed below.', 'rgba(236, 253, 245, 0.95)', '#047857');
+                
+                $('.curr-status').html('All blocks mined and sealed successfully.');
+                $('.completed').css('width', '100%');
+                $('.completed').html('100% completed');
+
+                setTimeout(function(){
+                    hide_loading();
+                }, 800);
+                
+                $('.mine-block-status').html(data.html);
+                $('.mine-block-status').show();
+            },
+            error: function() {
+                hide_loading();
+                showAlert('Mining operation failed.', 'rgba(255, 241, 242, 0.95)', '#b91c1c', 'vibrate');
+                $('.mine-block').show();
+            }
+        });
+
+        track_server();
+    });
+
+    function track_server(){
+        $.ajax({
+            type: "GET",
+            url: "/track-server/",
+            success: function(data){
+                if(data.progress){
+                    $('.curr-status').html(data.status);
+                    $('.completed').animate({'width': data.completed + '%'}, {duration: 300});
+                    $('.completed').html(data.completed + '% completed');
+
+                    setTimeout(function(){
+                        track_server();
+                    }, 400);
+                }
+            }
+        });
+    }
+</script>
+
+{% endblock %}

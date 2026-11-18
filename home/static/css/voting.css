@@ -1,0 +1,425 @@
+/* ==========================================================================
+   SecureVote - Digital Ballot Paper & Cryptographic Signing (voting.css)
+   ========================================================================== */
+
+.party-selection {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
+    animation: slide-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.ballot-header-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--slate-100);
+}
+
+.ballot-header-title-group h2 {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--slate-900);
+    letter-spacing: -0.4px;
+}
+
+.ballot-header-title-group p {
+    font-size: 13px;
+    color: var(--slate-500);
+    margin-top: 2px;
+}
+
+.ballot-badge-tag {
+    background: var(--indigo-50);
+    border: 1px solid var(--indigo-100);
+    color: var(--indigo-700);
+    padding: 5px 12px;
+    border-radius: var(--radius-full);
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Search Box */
+.search-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-box {
+    width: 100%;
+    padding: 14px 18px 14px 44px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--slate-900);
+    background: var(--slate-50);
+    border: 1.5px solid var(--slate-200);
+    border-radius: var(--radius-lg);
+    outline: none;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
+}
+
+.search-box:focus {
+    background: #ffffff;
+    border-color: var(--indigo-600);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+.search-box::placeholder {
+    color: var(--slate-400);
+}
+
+.search-icon-svg {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--slate-400);
+    font-size: 16px;
+    pointer-events: none;
+}
+
+/* Candidate / Party List */
+.party-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    background: var(--slate-50);
+    border: 1.5px solid var(--slate-200);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.option:hover {
+    background: #ffffff;
+    border-color: var(--indigo-300);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.option-left-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+}
+
+.party-logo {
+    width: 68px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--slate-200);
+    padding: 8px;
+    box-shadow: var(--shadow-xs);
+    flex-shrink: 0;
+}
+
+.party-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.divider {
+    display: none; /* Modern card design eliminates old vertical separator */
+}
+
+.party-name {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: left;
+    flex: 1;
+}
+
+.party-title-text {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--slate-900);
+}
+
+.candidate-name-text {
+    font-size: 13px;
+    color: var(--slate-600);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.candidate-name-text strong {
+    color: var(--indigo-700);
+}
+
+/* Action button inserted when clicked */
+.final-decision {
+    margin-top: 14px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    animation: slide-fade-in 0.25s ease-out;
+}
+
+.final-decision > #vote {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 32px;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--emerald-600), #047857);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+    transition: all 0.2s ease;
+    user-select: none;
+    text-decoration: none;
+}
+
+.final-decision > #vote:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.45);
+}
+
+/* ==========================================================================
+   Cryptographic Signing Modal Dialog
+   ========================================================================== */
+.dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.dialog > .vote-confirmation {
+    background: #ffffff;
+    border-radius: var(--radius-xl);
+    padding: 36px 40px;
+    max-width: 560px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    text-align: center;
+    margin: auto;
+}
+
+.dialog > .vote-confirmation > .confirm {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--slate-900);
+    letter-spacing: -0.4px;
+    margin-bottom: 16px;
+}
+
+.confirmation-card-preview {
+    background: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.dialog > .vote-confirmation > .confirmation-party-logo,
+.confirmation-card-preview img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    background: #ffffff;
+    padding: 6px;
+    border: 1px solid var(--slate-200);
+}
+
+.dialog > .vote-confirmation > .confirmation-party-name,
+.confirmation-card-preview .party-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--slate-900);
+    text-align: left;
+}
+
+/* Monospace Private Key Textarea */
+#private-key-input {
+    width: 100%;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--indigo-900);
+    background: var(--indigo-50);
+    border: 1.5px solid var(--indigo-200);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    box-sizing: border-box;
+    resize: vertical;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+#private-key-input:focus {
+    background: #ffffff;
+    border-color: var(--indigo-600);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.vote-confirmation-buttons {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    margin-top: 22px;
+}
+
+#final-confirm {
+    flex: 1;
+    padding: 14px 24px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--emerald-600), #047857);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+    transition: all 0.2s ease;
+    user-select: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+#final-confirm:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
+}
+
+#cancel-confirm {
+    padding: 14px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--slate-700);
+    background: var(--slate-100);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#cancel-confirm:hover {
+    background: var(--slate-200);
+}
+
+/* ==========================================================================
+   Post-Submission Sealing Overlay (.all-done)
+   ========================================================================== */
+.all-done {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    padding: 40px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.selected-party {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.voted-party-image {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+    border: 2px solid var(--slate-200);
+    background: #ffffff;
+    padding: 8px;
+    box-shadow: var(--shadow-md);
+}
+
+.final-message {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--slate-900);
+    line-height: 1.3;
+}
+
+@media (max-width: 640px) {
+    .party-selection {
+        padding: 20px 16px;
+    }
+    .option {
+        padding: 14px 16px;
+    }
+    .dialog > .vote-confirmation {
+        padding: 24px 20px;
+    }
+    .vote-confirmation-buttons {
+        flex-direction: column;
+    }
+}

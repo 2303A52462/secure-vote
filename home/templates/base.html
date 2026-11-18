@@ -1,0 +1,192 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureVote - Decentralized Blockchain E-Voting System</title>
+
+    <!-- Google Fonts for Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animations.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/loading.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/candidate-profile.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/voting.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/final-status.css' %}">
+
+    <script src="{% static 'scripts/jquery.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $.getScript("{% static 'scripts/base.js' %}");
+            $.getScript("{% static 'scripts/csrf.js' %}");
+        });
+    </script>
+
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+    {% csrf_token %}
+
+    <div class="gradient"></div>
+
+    <!-- ----------------------------- Modern Header --------------------------------- -->
+    <header class="header">
+        <div class="header-left">
+            <div class="menu-btn" title="Open Navigation Menu" role="button" tabindex="0">☰</div>
+
+            <a class="logo" href="/" title="SecureVote Home">
+                <div class="header-logo-icon-wrap">
+                    <img src="{% static 'images/logo.png' %}" alt="SecureVote Emblem">
+                </div>
+                <div class="logo-text-group">
+                    <span class="logo-brand-title">SecureVote</span>
+                    <span class="logo-brand-sub">
+                        <span class="live-dot"></span>
+                        SHA3-256 • ECDSA P-256
+                    </span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Center System Status Alerts / Toast -->
+        <div class="status-box">
+            <div class="status">
+                Decentralized Blockchain E-Voting System • PoW Ledger Online
+            </div>
+        </div>
+
+        <!-- Desktop Quick Navigation -->
+        <div class="header-right" style="display: flex; align-items: center; gap: 8px;">
+            <nav class="nav-links-bar" aria-label="Main Navigation">
+                <a class="nav-pill" href="/" title="Voter Authentication & Ballot">🗳️ Cast Ballot</a>
+                <a class="nav-pill" href="/show-result" title="Live Election Tally">📊 Results</a>
+                <a class="nav-pill" href="/mine-block" title="Proof-of-Work Miner">⛏️ Mine Blocks</a>
+                <a class="nav-pill" href="/blockchain" title="Blockchain Explorer">⛓️ Ledger</a>
+                <a class="nav-pill" href="/create-dummy-data" title="Seed Demo Database">⚙️ Demo Data</a>
+                <a class="nav-pill" href="/admin" target="_blank" rel="noopener" title="Django Administration">🛡️ Admin</a>
+            </nav>
+
+            <!-- Authenticated Citizen Session Badge -->
+            <div class="short-details" title="Authenticated Citizen Session">
+                <img class="profile-pic" alt="Citizen Avatar" src="{% static 'images/profile-bg.png' %}">
+                <div class="basic-details"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ---------------------------------------- Off-Canvas Sidebar / Navigation Drawer -------------------------------- -->
+    <div class="navigation" role="dialog" aria-modal="true" aria-label="Main Menu">
+        <aside class="navigation-drawer">
+            <div class="drawer-header">
+                <a class="drawer-brand" href="/">
+                    <div class="drawer-brand-icon">🗳️</div>
+                    <div>
+                        <div class="drawer-brand-title">SecureVote</div>
+                        <div class="drawer-brand-sub">Blockchain E-Voting Ledger</div>
+                    </div>
+                </a>
+                <div class="drawer-close-btn drawer-item-back" title="Close Menu" role="button" tabindex="0">✕</div>
+            </div>
+
+            <div class="drawer-content">
+                <!-- Section 1: Voting Flow -->
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Voter Portal</div>
+                    <a class="drawer-item" href="/">
+                        <span class="drawer-item-icon">🗳️</span>
+                        <span>Cast Ballot (Aadhaar Auth)</span>
+                    </a>
+                </div>
+
+                <!-- Section 2: Analytics & Transparency -->
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Election Analytics</div>
+                    <a class="drawer-item" href="/show-result">
+                        <span class="drawer-item-icon">📊</span>
+                        <span>Live Election Results</span>
+                    </a>
+                </div>
+
+                <!-- Section 3: Blockchain Engine -->
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Blockchain Engine</div>
+                    <a class="drawer-item" href="/mine-block">
+                        <span class="drawer-item-icon">⛏️</span>
+                        <span>Mine Blocks (Proof-of-Work)</span>
+                    </a>
+                    <a class="drawer-item" href="/blockchain">
+                        <span class="drawer-item-icon">⛓️</span>
+                        <span>Public Blockchain Explorer</span>
+                    </a>
+                </div>
+
+                <!-- Section 4: System Administration -->
+                <div class="drawer-section">
+                    <div class="drawer-section-title">Developer & Admin</div>
+                    <a class="drawer-item" href="/create-dummy-data">
+                        <span class="drawer-item-icon">⚙️</span>
+                        <span>Reset / Seed Demo Data</span>
+                    </a>
+                    <a class="drawer-item" href="/admin" target="_blank" rel="noopener">
+                        <span class="drawer-item-icon">🛡️</span>
+                        <span>Django Administration</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Drawer Bottom Security Card -->
+            <div class="drawer-footer-card">
+                <div class="drawer-footer-title">
+                    <span>🔒 Cryptographic Specs</span>
+                </div>
+                <div class="drawer-footer-specs">
+                    Curve: NIST P-256 (secp256r1)<br>
+                    Hash: SHA3-256 FIPS 186-3<br>
+                    Consensus: Proof-of-Work (PoW)<br>
+                    Ledger: Merkle Tree Self-Healing
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- -------------------------------------------- Main Content ----------------------------------- -->
+    <main class="main-content">
+        {% block main_content %}{% endblock %}
+    </main>
+
+    <!-- -------------------------------------------- App Footer ----------------------------------- -->
+    <footer class="app-footer">
+        <div class="footer-left">
+            <span><strong>SecureVote</strong> • Decentralized Electronic Voting Ledger</span>
+            <span class="footer-badge">ECDSA P-256 • SHA3-256</span>
+        </div>
+        <div class="footer-right">
+            <span>Consensus: Proof-of-Work</span>
+            <a href="/blockchain" style="color: var(--slate-500); font-weight: 600;">Explorer</a>
+            <a href="/show-result" style="color: var(--slate-500); font-weight: 600;">Live Tally</a>
+            <a href="/admin" target="_blank" rel="noopener" style="color: var(--slate-500); font-weight: 600;">Admin</a>
+        </div>
+    </footer>
+
+    <!-- --------------------------------- Modern Loading Modal ------------------------------ -->
+    <div class="loading-div">
+        <div class="loading-modal-card">
+            <img src="{% static 'images/logo.png' %}" alt="SecureVote Shield">
+            <div class="loading-title">SecureVote Blockchain</div>
+            <div class="loading-subtitle">SHA3-256 • Proof-of-Work • ECDSA</div>
+            <div class="loading-spinner-ring"></div>
+            <div id="loading-message" class="loading-message">Please wait...</div>
+        </div>
+    </div>
+
+</body>
+</html>

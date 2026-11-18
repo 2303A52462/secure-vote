@@ -1,0 +1,182 @@
+/* ==========================================================================
+   SecureVote - Cryptographic Receipt & Final Status (final-status.css)
+   ========================================================================== */
+
+.final-status-container {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    padding: 36px 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    animation: slide-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.receipt-header-banner {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.receipt-check-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--emerald-50);
+    border: 2px solid var(--emerald-200);
+    color: var(--emerald-600);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
+}
+
+.receipt-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--slate-900);
+    letter-spacing: -0.4px;
+}
+
+.receipt-subtitle {
+    font-size: 13.5px;
+    color: var(--slate-500);
+}
+
+/* Receipt Details Table */
+.final-status {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.final-status-row {
+    border-bottom: 1px solid var(--slate-200);
+}
+
+.final-status-row:last-child {
+    border-bottom: none;
+}
+
+.final-status td {
+    padding: 14px 18px;
+    font-size: 13px;
+    vertical-align: top;
+}
+
+.final-status-row td:first-child {
+    width: 190px;
+    font-weight: 700;
+    color: var(--slate-600);
+    background: #ffffff;
+    border-right: 1px solid var(--slate-200);
+}
+
+.receipt-hash-block {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.5;
+    word-break: break-all;
+    background: #ffffff;
+    border: 1px solid var(--slate-200);
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    color: var(--slate-800);
+    position: relative;
+}
+
+.receipt-hash-block.signature {
+    color: var(--indigo-700);
+    background: var(--indigo-50);
+    border-color: var(--indigo-100);
+}
+
+/* Quick Action Toolbar */
+.receipt-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.receipt-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border-radius: var(--radius-md);
+    font-size: 13.5px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    user-select: none;
+    text-align: center;
+}
+
+.btn-mine {
+    background: linear-gradient(135deg, var(--indigo-600), #4338ca);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.btn-mine:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+}
+
+.btn-results {
+    background: linear-gradient(135deg, var(--cyan-600), #0284c7);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.25);
+}
+
+.btn-results:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(6, 182, 212, 0.35);
+}
+
+.btn-ledger {
+    background: var(--slate-800);
+    color: #ffffff;
+}
+
+.btn-ledger:hover {
+    background: var(--slate-900);
+    transform: translateY(-2px);
+}
+
+.btn-revote {
+    background: linear-gradient(135deg, var(--emerald-600), #047857);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+}
+
+.btn-revote:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
+}
+
+@media (max-width: 640px) {
+    .final-status-container {
+        padding: 24px 18px;
+    }
+    .final-status-row td:first-child {
+        width: 140px;
+    }
+    .receipt-actions-grid {
+        grid-template-columns: 1fr;
+    }
+}

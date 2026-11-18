@@ -1,0 +1,111 @@
+{% load static %}
+
+<div class="party-selection">
+
+    <div class="ballot-header-banner">
+        <div class="ballot-header-title-group">
+            <h2>Official General Election Ballot Paper</h2>
+            <p>Select your designated political representative. All ballots are sealed with ECDSA digital signatures.</p>
+        </div>
+        <div class="ballot-badge-tag">
+            <span>🗳️</span>
+            <span>Secret Ballot Protocol</span>
+        </div>
+    </div>
+
+    <!-- Search / Filter Candidate Input -->
+    <div class="search-wrapper">
+        <span class="search-icon-svg">🔍</span>
+        <input class="search-box" placeholder="Search political party or candidate name..." type="text" id="search" autocomplete="off" aria-label="Search party or candidate">
+    </div>
+
+    <!-- Political Parties & Candidates List -->
+    <div class="party-list">
+
+        {% for party in parties %}
+
+            <div class="option" id="{{ party.party_id }}" role="button" tabindex="0">
+                <div class="option-left-content">
+                    <div class="party-logo">
+                        <img src="{{ party.party_logo }}" onerror="this.src='{% static 'images/logo.png' %}'" alt="{{ party.party_name }} Symbol">
+                    </div>
+                    <div class="divider"></div>
+                    <div class="party-name">
+                        <div class="party-title-text">{{ party.party_name }}</div>
+                        {% if party.candidate_name %}
+                        <div class="candidate-name-text">
+                            <span>Official Candidate:</span>
+                            <strong>{{ party.candidate_name }}</strong>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- ---------------- Cryptographic Signing Modal Dialog ---------------- -->
+    <div class="dialog" role="dialog" aria-modal="true" aria-label="Confirm and Sign Ballot">
+        <div class="vote-confirmation">
+            <div class="confirm">Confirm & Digitally Sign Ballot</div>
+            
+            <div class="confirmation-card-preview">
+                <img class="confirmation-party-logo" alt="Selected Candidate Symbol">
+                <div class="confirmation-party-name party-title"></div>
+            </div>
+
+            <!-- Cryptographic Verification Box -->
+            <div style="background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-lg); padding: 16px 20px; text-align: left;">
+                <div style="font-size: 13px; font-weight: 700; color: var(--slate-800); margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                    <span>🔐</span>
+                    <span>Elliptic Curve Digital Signature (NIST P-256 / SHA3-256)</span>
+                </div>
+                <p style="font-size: 12px; color: var(--slate-600); line-height: 1.5; margin: 0;">
+                    Your private key will generate a non-forgeable signature over your ballot digest (<code style="background: var(--slate-200); padding: 2px 6px; border-radius: 4px; font-family: var(--font-mono); font-size: 11px;">UID | Party | Timestamp</code>).
+                </p>
+                <div style="display: flex; gap: 10px; margin-top: 12px;">
+                    <button type="button" id="auto-fill-key-btn" style="background: var(--indigo-600); color: white; border: none; padding: 7px 14px; border-radius: 6px; font-size: 12.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s;">
+                        <span>📋</span>
+                        <span>Auto-Fill Private Key</span>
+                    </button>
+                    <button type="button" id="download-key-btn" style="background: #0284c7; color: white; border: none; padding: 7px 14px; border-radius: 6px; font-size: 12.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s;">
+                        <span>⬇️</span>
+                        <span>Download .pem</span>
+                    </button>
+                </div>
+            </div>
+
+            <textarea id="private-key-input" placeholder="-----BEGIN PRIVATE KEY----- ... (Paste your ECDSA key or click Auto-Fill above)" rows="6" aria-label="ECDSA Private Key"></textarea>
+
+            <div class="vote-confirmation-buttons">
+                <a id="final-confirm" role="button" tabindex="0">
+                    <span>✓</span>
+                    <span>Confirm & Cast Vote</span>
+                </a>
+                <a id="cancel-confirm" role="button" tabindex="0">
+                    <span>Cancel</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ---------------- Post-Submission Sealing Overlay ---------------- -->
+<div class="all-done">
+    <div class="front">
+        <div class="selected-party">
+            <img class="voted-party-image" src="{% static 'images/logo.png' %}" alt="Voted Symbol">
+            <div class="final-message"></div>
+        </div>
+        <div class="loading-spinner-ring" style="width: 44px; height: 44px; border-width: 4px; margin: 24px auto 12px;"></div>
+        <div style="font-size: 15px; font-weight: 700; color: var(--indigo-900); margin-top: 8px;">
+            Computing SHA3-256 Ballot Digest & Sealing into Blockchain Mempool...
+        </div>
+    </div>
+</div>
+
+<script>
+    $.getScript( "{% static 'scripts/voting.js' %}" );
+</script>

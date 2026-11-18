@@ -1,0 +1,223 @@
+/* ==========================================================================
+   SecureVote Blockchain E-Voting System - Animations & Micro-Interactions
+   ========================================================================== */
+
+/* Standard Slide Fade In */
+@keyframes slide-fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-fade-in-shortdetails {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Navigation Drawer Slide Animations */
+.drawer-slide-from-left {
+    animation: drawer-slide-from-left 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes drawer-slide-from-left {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.drawer-slide-to-left {
+    animation: drawer-slide-to-left 0.28s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+}
+
+@keyframes drawer-slide-to-left {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+/* OTP Verification Modal Slide Animations */
+.otp-verification-slide-from-bottom {
+    animation: otp-verification-slide-from-bottom 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes otp-verification-slide-from-bottom {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.otp-verification-slide-to-bottom {
+    animation: otp-verification-slide-to-bottom 0.25s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+}
+
+@keyframes otp-verification-slide-to-bottom {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(30px) scale(0.96);
+    }
+}
+
+/* Vote Confirmation Dialog Animations */
+.confirmVoteDialoge-slide-fade-in {
+    animation: confirmVoteDialoge-slide-fade-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes confirmVoteDialoge-slide-fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.92) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.confirmVoteDialoge-slide-fade-out {
+    animation: confirmVoteDialoge-slide-fade-out 0.25s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+}
+
+@keyframes confirmVoteDialoge-slide-fade-out {
+    from {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.92) translateY(20px);
+    }
+}
+
+/* Ballot Casting All-Done Transition */
+.all-done-rotate-collapse {
+    animation: allDoneCollapse 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes allDoneCollapse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.all-done-rotate-expand {
+    animation: allDoneExpand 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes allDoneExpand {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Toast Status Transitions */
+.translateStatus {
+    animation: translateStatus 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes translateStatus {
+    0% {
+        opacity: 0;
+        transform: translateY(-16px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.translateStatus2 {
+    animation: translateStatus2 0.35s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+}
+
+@keyframes translateStatus2 {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-16px);
+    }
+}
+
+/* Status Alert Vibrate / Shake on Error */
+.vibrate {
+    animation: shakeAlert 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes shakeAlert {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
+    40%, 60% { transform: translate3d(3px, 0, 0); }
+}
+
+/* Pulse Glow & Shimmer */
+.pulse-live {
+    animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
+    }
+    70% {
+        box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

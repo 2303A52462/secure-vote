@@ -1,0 +1,313 @@
+/* ==========================================================================
+   SecureVote - Live Election Analytics & Tally Dashboard (show-result.css)
+   ========================================================================== */
+
+.show-result {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    animation: slide-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ---------------- 4 Top Metric Cards ---------------- */
+.results-metric-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    width: 100%;
+}
+
+.result-stat-card {
+    background: #ffffff;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-lg);
+    padding: 20px 22px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.result-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.result-stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3.5px;
+}
+
+.card-total::before { background: var(--indigo-600); }
+.card-sealed::before { background: var(--emerald-500); }
+.card-mempool::before { background: var(--amber-500); }
+.card-blocks::before { background: var(--cyan-600); }
+
+.stat-card-number {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    line-height: 1.1;
+    margin-bottom: 4px;
+}
+
+.card-total .stat-card-number { color: var(--indigo-600); }
+.card-sealed .stat-card-number { color: var(--emerald-600); }
+.card-mempool .stat-card-number { color: var(--amber-600); }
+.card-blocks .stat-card-number { color: var(--cyan-600); }
+
+.stat-card-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--slate-500);
+}
+
+/* ---------------- Frontrunner / Winner Spotlight Card ---------------- */
+.winner-spotlight-card {
+    background: linear-gradient(135deg, #fefce8, #fffbeb);
+    border: 1.5px solid #fef08a;
+    border-radius: var(--radius-xl);
+    padding: 22px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 16px rgba(234, 179, 8, 0.12);
+}
+
+.winner-info-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.winner-trophy-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: #fef08a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.winner-titles h4 {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #a16207;
+    margin-bottom: 2px;
+}
+
+.winner-titles h2 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #713f12;
+    letter-spacing: -0.3px;
+}
+
+.winner-verify-btn {
+    padding: 10px 20px;
+    background: #854d0e;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(133, 77, 14, 0.3);
+}
+
+.winner-verify-btn:hover {
+    background: #713f12;
+    transform: translateY(-1px);
+}
+
+/* ---------------- Standings Table Card ---------------- */
+.standings-table-card {
+    background: #ffffff;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+}
+
+.standings-card-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--slate-100);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.standings-card-header h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--slate-900);
+}
+
+.standings-card-header span {
+    font-size: 12px;
+    color: var(--slate-500);
+}
+
+table.vote-count {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.vote-count tr {
+    border-bottom: 1px solid var(--slate-100);
+    transition: background-color 0.15s ease;
+}
+
+table.vote-count tr:last-child {
+    border-bottom: none;
+}
+
+table.vote-count tr:hover:not(.table-header) {
+    background: var(--slate-50);
+}
+
+table.vote-count td {
+    padding: 18px 20px;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+tr.table-header td {
+    background: var(--slate-50);
+    color: var(--slate-500);
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-bottom: 1px solid var(--slate-200);
+}
+
+.rank-badge {
+    font-weight: 800;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+}
+
+.party-symbol-img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    background: #ffffff;
+    border: 1px solid var(--slate-200);
+    padding: 4px;
+}
+
+.party-info-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.party-name-row {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--slate-900);
+}
+
+.candidate-name-row {
+    font-size: 12.5px;
+    color: var(--slate-500);
+}
+
+.candidate-name-row strong {
+    color: var(--indigo-600);
+}
+
+.vote-number-cell {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--indigo-700);
+    font-family: var(--font-mono);
+}
+
+/* Dual-layer animated percentage bar */
+.share-bar-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.share-track {
+    flex: 1;
+    background: var(--slate-100);
+    border-radius: var(--radius-full);
+    height: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.share-fill {
+    background: linear-gradient(90deg, var(--indigo-600), var(--cyan-500));
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.share-percent-label {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--slate-700);
+    width: 46px;
+    text-align: right;
+}
+
+/* Bottom Actions Row */
+.results-actions-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+    .results-metric-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .results-metric-grid {
+        grid-template-columns: 1fr;
+    }
+    .winner-spotlight-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+    .winner-verify-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    table.vote-count td {
+        padding: 12px 10px;
+    }
+}

@@ -1,0 +1,290 @@
+/* ==========================================================================
+   SecureVote - Single Block Cryptographic Audit Workbench (block-info.css)
+   ========================================================================== */
+
+.block-info-page-wrapper {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    animation: slide-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.block-audit-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 12px;
+}
+
+.block-audit-header-bar h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--slate-900);
+    letter-spacing: -0.4px;
+}
+
+.back-to-chain-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--indigo-600);
+    background: var(--indigo-50);
+    border: 1px solid var(--indigo-100);
+    padding: 6px 14px;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.back-to-chain-link:hover {
+    background: var(--indigo-100);
+    color: var(--indigo-800);
+}
+
+/* ---------------- Block Header Specifications Card ---------------- */
+.block-info, .vote-info {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    padding: 0;
+}
+
+table.block-info-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.block-info-table tr {
+    border-bottom: 1px solid var(--slate-100);
+}
+
+table.block-info-table tr:last-child {
+    border-bottom: none;
+}
+
+table.block-info-table td {
+    padding: 16px 24px;
+    font-size: 13.5px;
+    vertical-align: middle;
+}
+
+table.block-info-table td:first-child {
+    width: 220px;
+    font-weight: 700;
+    color: var(--slate-600);
+    background: var(--slate-50);
+    border-right: 1px solid var(--slate-200);
+}
+
+/* Hash Text Blocks */
+.audit-hash-code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.5;
+    word-break: break-all;
+    background: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    padding: 8px 12px;
+    border-radius: var(--radius-md);
+    display: block;
+}
+
+/* ---------------- Live Merkle Root Comparison Card ---------------- */
+.merkle-root-card {
+    background: #ffffff;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-xl);
+    padding: 22px 26px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.merkle-root-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--slate-700);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.merkle-hash-display {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #b45309;
+    background: #fffbeb;
+    border: 1px solid #fef3c7;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    word-break: break-all;
+}
+
+/* ---------------- Tamper Alert / Verified State Banners ---------------- */
+.tamper-alert-banner {
+    background: #fef2f2;
+    border: 2px solid #ef4444;
+    border-radius: var(--radius-xl);
+    padding: 22px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.15);
+}
+
+.tamper-alert-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: #b91c1c;
+    margin-bottom: 4px;
+}
+
+.tamper-alert-desc {
+    font-size: 13px;
+    color: #7f1d1d;
+}
+
+.sync-block {
+    background: var(--emerald-600);
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.sync-block:hover {
+    background: var(--emerald-700);
+    transform: translateY(-1px);
+}
+
+.verified-chain-banner {
+    background: #f0fdf4;
+    border: 2px solid #22c55e;
+    border-radius: var(--radius-xl);
+    padding: 22px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    box-shadow: 0 4px 16px rgba(34, 197, 94, 0.12);
+}
+
+.verified-chain-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: #15803d;
+    margin-bottom: 4px;
+}
+
+.verified-chain-desc {
+    font-size: 13px;
+    color: #166534;
+}
+
+.tamper-block-btn {
+    background: var(--rose-600);
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.tamper-block-btn:hover {
+    background: var(--rose-700);
+    transform: translateY(-1px);
+}
+
+/* ---------------- Sealed Transactions Table Card ---------------- */
+.vote-info {
+    margin-top: 10px;
+}
+
+.transactions-card-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--slate-100);
+    background: var(--slate-50);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.transactions-card-header h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--slate-900);
+}
+
+.vote-info > table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.vote-info > table tr {
+    border-bottom: 1px solid var(--slate-100);
+}
+
+.vote-info > table tr:last-child {
+    border-bottom: none;
+}
+
+.vote-info > table td {
+    padding: 14px 20px;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.vote-info tr.table-header td {
+    background: var(--slate-50);
+    color: var(--slate-500);
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-bottom: 1px solid var(--slate-200);
+}
+
+@media (max-width: 640px) {
+    table.block-info-table td:first-child {
+        width: 130px;
+        padding: 12px 14px;
+    }
+    table.block-info-table td {
+        padding: 12px 14px;
+    }
+    .tamper-alert-banner,
+    .verified-chain-banner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .sync-block,
+    .tamper-block-btn {
+        width: 100%;
+        text-align: center;
+    }
+}

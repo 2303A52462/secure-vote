@@ -1,0 +1,38 @@
+<div class="table-responsive-wrapper">
+    <table class="mine-block-result">
+        <tr class="table-header">
+            <td style="width: 100px;">Block ID</td>
+            <td>Previous Hash (SHA3-256)</td>
+            <td>Merkle Root Hash</td>
+            <td>Block Header Hash</td>
+            <td style="width: 90px; text-align: center;">Nonce</td>
+        </tr>
+        {% for r in result %}
+        <tr>
+            <td>
+                <a class="block-info-link" href="/block-info/?id={{ r.block_id }}">#{{ r.block_id }}</a>
+            </td>
+            <td title="{{ r.prev_hash }}" class="hash-cell prev-hash">{{ r.prev_hash }}</td>
+            <td title="{{ r.merkle_hash }}" class="hash-cell merkle-root">{{ r.merkle_hash }}</td>
+            <td title="{{ r.this_hash }}" class="hash-cell block-hash">{{ r.this_hash }}</td>
+            <td style="text-align: center; font-family: var(--font-mono); font-weight: 700; color: var(--slate-700);">{{ r.nonce }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 24px;">
+    <div class="time-taken-info">
+        <span>⏱️ Total Mining Time:</span>
+        <span>{{ time_taken }} seconds</span>
+    </div>
+
+    <div style="display: flex; gap: 10px;">
+        <a href="/blockchain" class="receipt-action-btn btn-ledger">
+            <span>⛓️ View in Blockchain Explorer</span>
+        </a>
+        <a href="/show-result" class="receipt-action-btn btn-results">
+            <span>📊 View Live Results</span>
+        </a>
+    </div>
+</div>

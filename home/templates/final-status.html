@@ -1,0 +1,67 @@
+<div class="final-status-container">
+
+    <div class="receipt-header-banner">
+        <div class="receipt-check-icon">✓</div>
+        <h2 class="receipt-title">Vote Successfully Registered & Sealed</h2>
+        <p class="receipt-subtitle">Cryptographic ballot signed with ECDSA (NIST P-256) and hashed with SHA3-256</p>
+    </div>
+
+    {% if email and is_success %}
+    <div
+        style="background: var(--emerald-50); border: 1.5px solid var(--emerald-200); border-radius: var(--radius-lg); padding: 14px 20px; text-align: center;">
+        <span style="font-size: 13.5px; color: var(--emerald-800); font-weight: 600;">
+            ✉️ An official vote confirmation receipt with your cryptographic signature has been dispatched to:
+            <strong>{{ email }}</strong>
+        </span>
+    </div>
+    {% elif email %}
+    <div
+        style="background: var(--rose-50); border: 1.5px solid var(--rose-200); border-radius: var(--radius-lg); padding: 14px 20px; text-align: center;">
+        <span style="font-size: 13.5px; color: var(--rose-800); font-weight: 600;">
+            ⚠️ An audit alert regarding this submission attempt was sent to: <strong>{{ email }}</strong>
+        </span>
+    </div>
+    {% endif %}
+
+    <table class="final-status">
+        <tr class="final-status-row">
+            <td>Ballot Hash (SHA3-256)</td>
+            <td>
+                <div class="receipt-hash-block">{{ ballot }}</div>
+            </td>
+        </tr>
+        <tr class="final-status-row">
+            <td>ECDSA Digital Signature</td>
+            <td>
+                <div class="receipt-hash-block signature">{{ ballot_signature }}</div>
+            </td>
+        </tr>
+        <tr class="final-status-row">
+            <td>Consensus Ledger Status</td>
+            <td style="font-weight: 700; color: var(--emerald-700); font-size: 14px;">
+                {{ status }}
+            </td>
+        </tr>
+    </table>
+
+    <!-- Quick Action Navigation Toolbar -->
+    <div class="receipt-actions-grid">
+        <a href="/mine-block" class="receipt-action-btn btn-mine">
+            <span>⛏️</span>
+            <span>Mine Into Blockchain</span>
+        </a>
+        <a href="/show-result" class="receipt-action-btn btn-results">
+            <span>📊</span>
+            <span>View Election Results</span>
+        </a>
+        <a href="/blockchain" class="receipt-action-btn btn-ledger">
+            <span>⛓️</span>
+            <span>Blockchain Explorer</span>
+        </a>
+        <a href="/" class="receipt-action-btn btn-revote">
+            <span>🗳️</span>
+            <span>Cast Another Vote</span>
+        </a>
+    </div>
+
+</div>

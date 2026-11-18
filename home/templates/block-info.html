@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/block-info.css' %}">
+
+    <script src="{% static 'scripts/base.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            hide_loading();
+            var block_id = {{ this_block.id|default:"0" }};
+            showAlert(
+                'Block #{{ this_block.id }} Cryptographic Audit & Merkle Proof Inspector',
+                'rgba(238, 242, 255, 0.95)', '#4338ca');
+
+            // Sync Block (Consensus Self-Healing)
+            $('.sync-block').click(function(){
+                show_loading('Consensus Self-Healing: Re-synchronizing block from immutable backup ledger...');
+                $.ajax({
+                    type: "GET",
+                    url: "/sync-block/",
+                    data: {'block-id': block_id},
+                    success: function(data){
+                        if(data.success){
+                            showAlert('Block #' + block_id + ' successfully restored and verified!', 'rgba(236, 253, 245, 0.95)', '#047857');
+                            setTimeout(function(){
+                                location.href = '/block-info/?id=' + block_id;
+                            }, 1000);
+                        } else {
+                            hide_loading();
+                            showAlert('Sync failed: ' + data.error, 'rgba(255, 241, 242, 0.95)', '#b91c1c', 'vibrate');
+                        }
+                    }
+                });
+            });
+
+            // Tamper Block (Simulate Cyberattack for Viva / Evaluation)
+            $('.tamper-block-btn').click(function(){
+                if(confirm('Simulate a cyberattack by corrupting a vote transaction in this block? This tests the blockchain tamper-detection algorithm.')){
+                    show_loading('Simulating malicious data tampering in block database...');
+                    $.ajax({
+                        type: "GET",
+                        url: "/tamper-block/",
+                        data: {'block-id': block_id},
+                        success: function(data){
+                            if(data.success){
+                                showAlert('Attack simulated: A vote transaction was modified. Recalculating Merkle root...', 'rgba(255, 241, 242, 0.95)', '#b91c1c', 'vibrate');
+                                setTimeout(function(){
+                                    location.href = '/block-info/?id=' + block_id;
+                                }, 1200);
+                            } else {
+                                hide_loading();
+                                showAlert(data.error || 'Tampering failed.', 'rgba(255, 241, 242, 0.95)', '#b91c1c', 'vibrate');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block main_content %}
+
+<div class="block-info-page-wrapper">
+
+    {% if error %}
+    <div style="background: var(--rose-50); border: 1.5px solid var(--rose-200); color: var(--rose-800); padding: 32px; border-radius: var(--radius-xl); text-align: center;">
+        <h3 style="font-size: 18px; margin-bottom: 8px;">{{ error }}</h3>
+        <a href="/blockchain" class="back-to-chain-link" style="margin-top: 12px; display: inline-flex;">← Return to Blockchain Explorer</a>
+    </div>
+    {% else %}
+
+    <!-- Header & Breadcrumbs -->
+    <div class="block-audit-header-bar">
+        <h2>Block Header Inspection — Height #{{ this_block.id }}</h2>
+        <a href="/blockchain" class="back-to-chain-link">← Back to Ledger Chain</a>
+    </div>
+
+    <!-- ---------------- Block Header Specifications Card ---------------- -->
+    <div class="block-info">
+        <table class="block-info-table">
+            <tr>
+                <td>Block Height</td>
+                <td>
+                    <span class="block-info-link">#{{ this_block.id }}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Previous Block Hash</td>
+                <td>
+                    <span class="audit-hash-code" style="color: var(--indigo-800);">{{ this_block.prev_hash }}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Block Header Hash</td>
+                <td>
+                    <span class="audit-hash-code" style="color: var(--cyan-800); font-weight: 700;">{{ this_block.this_hash }}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Sealed Merkle Root</td>
+                <td>
+                    <span class="audit-hash-code" style="color: #7c2d12; font-weight: 600;">{{ this_block.merkle_hash }}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Proof-of-Work Nonce</td>
+                <td style="font-family: var(--font-mono); font-weight: 700; color: var(--slate-800);">{{ this_block.nonce }}</td>
+            </tr>
+            <tr>
+                <td>Block Timestamp</td>
+                <td style="font-family: var(--font-mono); font-size: 13px; color: var(--slate-700);">
+                    {{ this_block.timestamp|date:"Y-m-d" }} {{ this_block.timestamp|time:"H:i:s" }} UTC
+                </td>
+            </tr>
+            <tr>
+                <td>Network Confirmations</td>
+                <td>
+                    <span style="display: inline-flex; align-items: center; gap: 6px; background: var(--emerald-50); border: 1px solid var(--emerald-200); color: var(--emerald-800); font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: var(--radius-full);">
+                        <span>●</span> {{ confirmed_by }} Confirmations
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ---------------- Live Merkle Root Comparison Card ---------------- -->
+    <div class="merkle-root-card">
+        <div class="merkle-root-title">
+            <span>🌳</span>
+            <span>Live Recalculated Merkle Root (Dynamic Leaf Audit):</span>
+        </div>
+        <div class="merkle-hash-display">{{ re_merkle_hash }}</div>
+    </div>
+
+    <!-- ---------------- Tamper Status Banner & Action Buttons ---------------- -->
+    <div>
+        {% if isTampered %}
+        <div class="tamper-alert-banner">
+            <div>
+                <div class="tamper-alert-title">
+                    ⚠️ INTEGRITY ALERT: Vote transaction(s) in this block have been TAMPERED with!
+                </div>
+                <div class="tamper-alert-desc">
+                    The dynamic SHA3-256 Merkle Root calculated from database ballots does not match the block header hash sealed at mining time.
+                </div>
+            </div>
+            <div>
+                <button type="button" class="sync-block">
+                    🔄 Sync Block (Self-Healing Consensus)
+                </button>
+            </div>
+        </div>
+        {% else %}
+        <div class="verified-chain-banner">
+            <div>
+                <div class="verified-chain-title">
+                    ✅ INTEGRITY VERIFIED: All vote transactions in this block are INTACT.
+                </div>
+                <div class="verified-chain-desc">
+                    Live recalculated SHA3-256 Merkle root matches the cryptographic header hash exactly (0 bit alteration).
+                </div>
+            </div>
+            <div>
+                <button type="button" class="tamper-block-btn" title="Simulate database corruption for academic demonstration">
+                    ⚡ Simulate Attack (Tamper Vote)
+                </button>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- ---------------- Sealed Transactions Table Card ---------------- -->
+    <div class="vote-info">
+        <div class="transactions-card-header">
+            <h3>Constituent Transactions Sealed in Block #{{ this_block.id }}</h3>
+            <span style="font-size: 12px; font-weight: 700; background: var(--indigo-50); color: var(--indigo-700); padding: 4px 10px; border-radius: var(--radius-full); border: 1px solid var(--indigo-100);">
+                {{ vote_count }} Verified Ballots
+            </span>
+        </div>
+
+        <table>
+            <tr class="table-header">
+                <td style="width: 70px;">Tx #</td>
+                <td style="width: 190px;">Voter Aadhaar (UID)</td>
+                <td style="width: 190px;">Timestamp (UTC)</td>
+                <td>Individual Vote Hash (SHA3-256 Leaf Digest)</td>
+            </tr>
+
+            {% for vote, hash in votes %}
+            <tr>
+                <td style="font-family: var(--font-mono); font-weight: 700; color: var(--slate-500);">#{{ forloop.counter }}</td>
+                <td style="font-family: var(--font-mono); font-weight: 700; color: var(--indigo-700);">{{ vote.uuid }}</td>
+                <td style="font-family: var(--font-mono); font-size: 12.5px; color: var(--slate-600);">
+                    {{ vote.timestamp|date:"Y-m-d" }} {{ vote.timestamp|time:"H:i:s" }}
+                </td>
+                <td>
+                    <span class="audit-hash-code" style="color: var(--slate-800);">{{ hash }}</span>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align: center; padding: 36px; color: var(--slate-400);">No transactions found in this block.</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

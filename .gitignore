@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Django
+*.log
+local_settings.py
+.env
+staticfiles/
+
+# Database
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3.backup
+*.backup
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Antigravity & Scratch
+.gemini/
+.system_generated/

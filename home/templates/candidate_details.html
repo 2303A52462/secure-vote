@@ -1,0 +1,170 @@
+{% load static %}
+
+<div class="candidate-details-div">
+
+    <!-- ---------------- National Voter Credential Card ---------------- -->
+    <div class="candidate-details">
+
+        <div class="credential-top-ribbon">
+            <div class="credential-header-left">
+                <div class="credential-emblem-wrap">🇮🇳</div>
+                <div class="credential-header-titles">
+                    <h3>Election Commission of India — Digital Voter ID Card</h3>
+                    <p>Cryptographically Verified Citizen Credential</p>
+                </div>
+            </div>
+            <div class="credential-verified-badge">
+                <span>✓</span>
+                <span>UIDAI Verified</span>
+            </div>
+        </div>
+
+        <div class="voter-card-body">
+            <!-- Left Column: Photo & UID -->
+            <div class="voter-photo-column">
+                <img class="candidate-photo" src="{{ details.profile_pic }}"
+                    onerror="this.src='{% static 'images/profile-bg.png' %}'" alt="Voter Photo">
+                <span class="voter-uid-chip">{{ details.uuid }}</span>
+            </div>
+
+            <!-- Right Column: Details Data Table -->
+            <table class="details">
+                <tr class="details-row">
+                    <td class="des">Full Name</td>
+                    <td style="font-weight: 700; font-size: 16px; color: var(--slate-900);">{{ details.name }}</td>
+                </tr>
+                <tr class="details-row">
+                    <td class="des">Aadhaar UID</td>
+                    <td style="font-weight: 700; font-family: var(--font-mono); color: var(--indigo-700);">{{
+                        details.uuid }}</td>
+                </tr>
+                <tr class="details-row">
+                    <td class="des">Date of Birth</td>
+                    <td style="font-weight: 500; color: var(--slate-700);">{{ details.dob }}</td>
+                </tr>
+                <tr class="details-row">
+                    <td class="des">Registered Mobile</td>
+                    <td style="font-weight: 700; color: var(--emerald-700); font-family: var(--font-mono);">
+                        {% if details.phone %}+91 {{ details.phone }}{% else %}+91 98490 12345{% endif %}
+                    </td>
+                </tr>
+                <tr class="details-row">
+                    <td class="des">Registered Email</td>
+                    <td style="font-weight: 500; color: var(--slate-700);">{{ details.email }}</td>
+                </tr>
+                <tr class="details-row">
+                    <td class="des">Postal Pincode</td>
+                    <td style="font-weight: 600; color: var(--slate-700); font-family: var(--font-mono);">{{
+                        details.pincode }}</td>
+                </tr>
+                <tr class="details-row">
+                    <td class="des">Electoral Constituency</td>
+                    <td style="font-weight: 600; color: var(--slate-700);">{{ details.region }}</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- ---------------- Two-Factor Voter Authentication Section ---------------- -->
+    <div class="verification-box">
+
+        <div class="verification-header">
+            <div class="verification-title-group">
+                <span>🔐</span>
+                <span>Two-Factor Voter Authentication (2FA)</span>
+            </div>
+            <span
+                style="font-size: 11px; background: var(--emerald-50); color: var(--emerald-700); border: 1px solid var(--emerald-200); font-weight: 700; padding: 4px 10px; border-radius: 20px;">
+                Required Before Ballot Access
+            </span>
+        </div>
+
+        <!-- Method Selector Tabs -->
+        <div class="auth-tabs-bar">
+            <button type="button" id="tab-btn-mobile" class="auth-tab-btn active" onclick="switchAuthTab('mobile')">
+                <span>📱 Mobile Number SMS OTP</span>
+                <span class="auth-tab-pill-tag">PRIMARY</span>
+            </button>
+            <button type="button" id="tab-btn-email" class="auth-tab-btn auth-tab-btn-email"
+                onclick="switchAuthTab('email')">
+                <span>✉️ Institutional Email OTP</span>
+                <span class="auth-tab-pill-tag">EXTRA OPTION</span>
+            </button>
+        </div>
+
+        <!-- Mobile OTP Section (Default / Primary) -->
+        <div id="auth-panel-mobile" class="auth-panel">
+            <div style="font-size: 13px; font-weight: 600; color: var(--slate-700);">
+                Registered Phone Number for SMS Authentication:
+            </div>
+            <div class="auth-input-row">
+                <input class="auth-input-field" id="mobile-input"
+                    value="{% if details.phone %}{{ details.phone }}{% else %}9959793306{% endif %}" readonly
+                    aria-label="Registered Mobile Number">
+                <img id="verified-badge-mobile" class="verified-icon" src="{% static 'images/verified.png' %}"
+                    style="display: none;" alt="Verified Checkmark">
+                <button type="button" class="button auth-send-btn" id="send-mobile-otp">
+                    Send Mobile OTP
+                </button>
+            </div>
+            <div class="auth-hint-msg" id="mobile-hint-msg">
+                ⚡ <strong>Primary Verification:</strong> Click "Send Mobile OTP" to dispatch a 6-digit cryptographic
+                passcode via SMS to your registered phone.
+            </div>
+        </div>
+
+        <!-- Email OTP Section (Extra Option) -->
+        <div id="auth-panel-email" class="auth-panel" style="display: none;">
+            <div style="font-size: 13px; font-weight: 600; color: var(--slate-700);">
+                Registered Institutional Email Address:
+            </div>
+            <div class="auth-input-row">
+                <input class="auth-input-field" id="email-input" value="{{ details.email }}" readonly
+                    aria-label="Registered Email Address">
+                <img id="verified-badge-email" class="verified-icon" src="{% static 'images/verified.png' %}"
+                    style="display: none;" alt="Verified Checkmark">
+                <button type="button" class="button auth-send-btn auth-send-btn-email" id="send-email-otp">
+                    Send Email OTP
+                </button>
+            </div>
+            <div class="auth-hint-msg" id="email-hint-msg">
+                ✉️ <strong>Alternative Option:</strong> Click "Send Email OTP" to dispatch a 6-digit cryptographic
+                passcode to your registered institutional inbox.
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ---------------- Action Section ---------------- -->
+    <div class="action-section">
+        <a class="vote-now disabled" id="vote-now" role="button" tabindex="0">
+            <span>Proceed to Official Ballot Paper</span>
+            <span>→</span>
+        </a>
+    </div>
+
+</div>
+
+<!-- ---------------- OTP Verification Popup Dialog Modal ---------------- -->
+<div class="otp-verification" role="dialog" aria-modal="true" aria-label="OTP Passcode Verification">
+    <div class="otp-div">
+        <div class="otp-modal-header">Enter 6-Digit Passcode Sent To:</div>
+        <div id="otp-destination-display"></div>
+        <input id="otp-input" placeholder="• • • • • •" maxlength="6" autocomplete="one-time-code"
+            aria-label="OTP Code">
+
+        <div class="otp-btn-row">
+            <button type="button" class="button" id="verify">
+                Verify OTP
+            </button>
+            <button type="button" class="button" id="cancel-otp">
+                Cancel
+            </button>
+        </div>
+
+        <div id="otp-demo-hint"></div>
+    </div>
+</div>
+
+<script src="{% static 'scripts/candidate_details.js' %}"></script>

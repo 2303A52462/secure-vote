@@ -1,0 +1,315 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+<style>
+.curr-status {
+    color: var(--indigo-700);
+    font-size: 14.5px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+div.complete-status {
+    margin: 12px auto;
+    width: 100%;
+    max-width: 540px;
+    background: var(--slate-100);
+    border: 1px solid var(--slate-200);
+    height: 24px;
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.06);
+}
+
+div.completed {
+    width: 0%;
+    background: linear-gradient(90deg, var(--indigo-600), var(--cyan-500));
+    height: 24px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 24px;
+    color: #ffffff;
+    text-align: center;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    transition: width 0.3s ease;
+}
+
+.create-data-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-xl);
+    width: 100%;
+    max-width: 780px;
+    padding: 36px 40px;
+    box-shadow: var(--shadow-card);
+    animation: slide-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.create-data-header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--indigo-50);
+    border: 1px solid var(--indigo-100);
+    color: var(--indigo-700);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: fit-content;
+    margin-bottom: 12px;
+}
+
+.create-data-wrapper h2 {
+    color: var(--slate-900);
+    margin: 0 0 6px 0;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+}
+
+.create-data-desc {
+    color: var(--slate-500);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.create-option-card {
+    background: var(--slate-50);
+    border: 1.5px solid var(--slate-200);
+    padding: 18px 22px;
+    border-radius: var(--radius-lg);
+    margin: 8px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.create-option-card:hover {
+    background: #ffffff;
+    border-color: var(--indigo-300);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-1px);
+}
+
+.create-option-card input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--indigo-600);
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.create-option-card label {
+    cursor: pointer;
+    flex: 1;
+}
+
+.create-option-title {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--slate-900);
+    margin-bottom: 2px;
+}
+
+.create-option-subtitle {
+    font-size: 12.5px;
+    color: var(--slate-500);
+    line-height: 1.5;
+}
+
+.create-data-wrapper .submit-button {
+    background: linear-gradient(135deg, var(--indigo-600), #4338ca);
+    padding: 14px 32px;
+    color: #ffffff;
+    margin-top: 24px;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    text-align: center;
+    font-size: 15.5px;
+    font-weight: 700;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    user-select: none;
+}
+
+.create-data-wrapper .submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.45);
+    background: linear-gradient(135deg, #4338ca, #3730a3);
+}
+
+.danger-note {
+    color: #991b1b;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    padding: 12px 18px;
+    border-radius: var(--radius-md);
+    margin-top: 20px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+@media (max-width: 640px) {
+    .create-data-wrapper {
+        padding: 24px 18px;
+    }
+}
+</style>
+
+<script src="{% static 'scripts/base.js' %}"></script>
+<script>
+    $(document).ready(function(){
+        hide_loading();
+
+        $('.submit-button').click(function(){
+            var createRandomVoters = $('#createRandomVoters').is(':checked');
+            var createPoliticianParties = $('#createPoliticianParties').is(':checked');
+            var castRandomVote = $('#castRandomVote').is(':checked');
+
+            if(castRandomVote) {
+                if(createPoliticianParties && createRandomVoters){}
+                else {
+                    alert('Votes cannot be cast without a database of registered citizens and political parties!');
+                    return;
+                }
+            }
+
+            startCreatingDummyData({
+                'createRandomVoters': createRandomVoters,
+                'createPoliticianParties': createPoliticianParties,
+                'castRandomVote': castRandomVote
+            });
+        });
+
+        function startCreatingDummyData(to_do) {
+            var html = `
+                <div class="curr-status">Initializing Electoral Ledger Database...</div>
+                <div class="complete-status">
+                    <div class="completed">0% completed</div>
+                </div>
+            `;
+            show_loading('Seeding Electoral Database...<br>' + html);
+            showAlert('Resetting and seeding demo database.', 'rgba(238, 242, 255, 0.95)', '#4338ca');
+            
+            $.ajax({
+                type: "GET",
+                url: "/create-dummy-data/",
+                data: to_do,
+                success: function(data){
+                    if(data.success) {
+                        $('.completed').animate({'width': '100%'}, {duration: 300});
+                        $('.completed').html('100% completed');
+                        showAlert('Database initialized successfully! Redirecting to Home...', 'rgba(236, 253, 245, 0.95)', '#047857');
+                        $('.curr-status').html('Data created successfully.<br>Redirecting to Home page...');
+                        setTimeout(function(){
+                            location.href = '/';
+                        }, 1200);
+                    } else {
+                        showAlert('Database seed error.', 'rgba(255, 241, 242, 0.95)', '#b91c1c', 'vibrate');
+                        $('.curr-status').html('Something went wrong. Redirecting...');
+                        setTimeout(function(){
+                            location.href = '/';
+                        }, 2500);
+                    }
+                }
+            });
+
+            track_server();
+        }
+
+        function track_server(){
+            $.ajax({
+                type: "GET",
+                url: "/track-server/",
+                success: function(data){
+                    if(data.progress){
+                        $('.curr-status').html(data.status);
+                        $('.completed').animate({'width': data.completed + '%'}, {duration: 300});
+                        $('.completed').html(data.completed + '% completed');
+
+                        setTimeout(function(){
+                            track_server();
+                        }, 400);
+                    }
+                }
+            });
+        }
+
+    });
+</script>
+{% endblock %}
+
+{% block main_content %}
+
+<div class="create-data-wrapper">
+    <div class="create-data-header-badge">
+        <span>⚙️</span>
+        <span>Evaluation & Demo Environment</span>
+    </div>
+
+    <h2>Database Seeding & Test Environment Setup</h2>
+    <p class="create-data-desc">
+        Use this console to initialize demonstration records, national political parties, and verified citizens for examiners, viva evaluations, or presentation testing.
+    </p>
+
+    <div class="create-option-card">
+        <input type="checkbox" id="createPoliticianParties" checked>
+        <label for="createPoliticianParties">
+            <div class="create-option-title">Register National Political Parties</div>
+            <div class="create-option-subtitle">Registers BJP, INC, AAP, BSP, and NOTA with official candidate profiles and local SVG symbols.</div>
+        </label>
+    </div>
+
+    <div class="create-option-card">
+        <input type="checkbox" id="createRandomVoters" checked>
+        <label for="createRandomVoters">
+            <div class="create-option-title">Register Verified Citizens (Official Electoral Roll)</div>
+            <div class="create-option-subtitle">Enrolls team members (Mohammad Arkan, Billa Mahanand, Rajesh) with 12-digit UIDAI Aadhaar numbers, regional constituencies, phone, and email.</div>
+        </label>
+    </div>
+
+    <div class="create-option-card">
+        <input type="checkbox" id="castRandomVote" checked>
+        <label for="castRandomVote">
+            <div class="create-option-title">Cast Sample Initial Votes</div>
+            <div class="create-option-subtitle">Seeds test votes into the mempool so you can demonstrate Proof-of-Work block mining immediately during your evaluation!</div>
+        </label>
+    </div>
+
+    <div class="submit-button" role="button" tabindex="0">
+        <span>⚙️</span>
+        <span>Initialize & Seed Database Now</span>
+        <span>→</span>
+    </div>
+
+    <div class="danger-note">
+        <span>⚠️</span>
+        <span><strong>Note:</strong> Initializing the demo database will purge previous test blocks and reset the blockchain ledger to the Genesis state (Block #0).</span>
+    </div>
+</div>
+
+{% endblock %}
